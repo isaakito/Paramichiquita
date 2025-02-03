@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi amor</title>
+    <style>
+        /* [Estilos anteriores se mantienen igual hasta .tulipan] */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: #333;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+        h1 {
+            color: #ff4b6a;
+            margin-bottom: 2rem;
+        }
+        .list {
+            text-align: left;
+            margin: 2rem auto;
+            max-width: 400px;
+        }
+        .buttons {
+            margin-top: 2rem;
+        }
+        button {
+            padding: 1rem 2rem;
+            margin: 0 1rem;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        button:hover {
+            transform: scale(1.1);
+        }
+        .accept {
+            background: #4CAF50;
+            color: white;
+        }
+        .reject {
+            background: #f44336;
+            color: white;
+        }
+        .tulipanes {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #1a1a1a, #000000);
+            color: white;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        .tulipan-container {
+            position: absolute;
+            animation: flotar 3s infinite ease-in-out;
+        }
+        .tulipan {
+            width: 150px;
+            height: 250px;
+            filter: drop-shadow(0 0 15px rgba(255,105,180,0.3));
+        }
+        .mensaje-final {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-family: 'Arial', sans-serif;
+            animation: brillar 2s infinite;
+            z-index: 1001;
+            background: rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 15px;
+            white-space: nowrap;
+        }
+        @keyframes brillar {
+            0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff69b4; }
+            50% { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #ff69b4; }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #ff69b4; }
+        }
+        @keyframes flotar {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- [Contenido anterior igual] -->
+        <h1>Hola, mi vida.</h1>
+        <p>Hoy quiero aprovechar este momento para decirte las cosas que más me gustan de ti:</p>
+        <div class="list">
+            <p>1.- Tus ojos</p>
+            <p>2.- Tu cabello</p>
+            <p>3.- Tu piel</p>
+            <p>4.- Tu sonrisa</p>
+            <p>5.- Tu risa</p>
+        </div>
+        <p>Podría seguir enumerando todo lo que me encanta de ti, pero no terminaría nunca. Los defectos que dices tener son, en realidad, las cosas que más amo de ti.</p>
+        <p>Hemos pasado tanto tiempo juntos y, aún hoy, sigo tan enamorado de ti como la primera vez que te vi. Soy tan feliz a tu lado que no necesito mucho más.</p>
+        <p>Eres mi pingüinita, porque estos animales eligen una pareja para toda la vida, y son un símbolo del amor verdadero.</p>
+        <p><strong>Hoy te pregunto con todo mi corazón: ¿Me concederías el honor de ser tu San Valentín?</strong></p>
+        <div class="buttons">
+            <button class="accept" onclick="mostrarTulipanes()">¡Sí, acepto! ❤️</button>
+            <button class="reject" onclick="moverBoton(this)">No 💔</button>
+        </div>
+    </div>
+
+    <div class="tulipanes" id="tulipanes">
+        <div class="mensaje-final">Te amo como nunca nadie lo hará</div>
+    </div>
+
+    <script>
+        function crearTulipan(x, y, escala, retraso) {
+            const container = document.createElement('div');
+            container.className = 'tulipan-container';
+            container.style.left = x + 'px';
+            container.style.top = y + 'px';
+            container.style.animationDelay = retraso + 's';
+            
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute('class', 'tulipan');
+            svg.setAttribute('viewBox', '0 0 200 400');
+            
+            // Define gradientes para los pétalos
+            const defs = ` 
+                <defs>
+                    <linearGradient id="petalGradient${x}" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#FF69B4;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#FF1493;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#FF69B4;stop-opacity:1" />
+                    </linearGradient>
+                    <linearGradient id="talloGradient${x}" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#228B22;stop-opacity:1" />
+                        <stop offset="50%" style="stop-color:#32CD32;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#228B22;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+            `;
+
+            const contenido = `
+                ${defs}
+                <!-- Tallo principal realista -->
+                <path d="M100,380 C100,380 95,300 100,250 S105,200 100,150" 
+                      stroke="url(#talloGradient${x})" stroke-width="8" fill="none"/>
+                
+                <!-- Hojas realistas -->
+                <path d="M100,300 C60,280 40,290 20,260 C40,250 70,270 100,290" 
+                      fill="#228B22" opacity="0.9"/>
+                <path d="M100,260 C140,240 160,250 180,220 C160,210 130,230 100,250" 
+                      fill="#32CD32" opacity="0.9"/>
+                
+                <!-- Flor principal -->
+                <g transform="translate(100,150)">
+                    <!-- Pétalos externos -->
+                    <path d="M0,0 C-40,-20 -50,-80 0,-100 C50,-80 40,-20 0,0" 
+                          fill="url(#petalGradient${x})" opacity="0.9"/>
+                    <path d="M0,0 C40,-20 50,-80 0,-100 C-50,-80 -40,-20 0,0" 
+                          fill="url(#petalGradient${x})" opacity="0.9"/>
+                    
+                    <!-- Pétalos centrales -->
+                    <path d="M0,-10 C-30,-30 -35,-70 0,-85 C35,-70 30,-30 0,-10" 
+                          fill="#FF1493" opacity="0.85"/>
+                    <path d="M0,-20 C-20,-40 -20,-60 0,-80 C20,-60 20,-40 0,-20" 
+                          fill="#FF69B4" opacity="0.85"/>
+                </g>
+            `;
+            
+            svg.innerHTML = contenido;
+            container.appendChild(svg);
+            return container;
+        }
+
+        function moverBoton(btn) {
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'fixed';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        function mostrarTulipanes() {
+            const tulipanes = document.getElementById('tulipanes');
+            tulipanes.style.display = 'block';
+            
+            const numTulipanes = 40; // Aumentar número de tulipanes
+            
+            for (let i = 0; i < numTulipanes; i++) {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                const escala = 0.6 + Math.random() * 0.4; // Tamaño más uniforme
+                const retraso = Math.random() * 2;
+                
+                const tulipan = crearTulipan(x, y, escala, retraso);
+                tulipanes.appendChild(tulipan);
+                
+                tulipan.style.opacity = '0';
+                tulipan.style.transform = `scale(0) rotate(${Math.random() * 360}deg)`;
+                
+                setTimeout(() => {
+                    tulipan.style.transition = 'all 1.5s cubic-bezier(0.4, 0, 0.2, 1)';
+                    tulipan.style.opacity = '1';
+                    tulipan.style.transform = `scale(${escala}) rotate(${Math.random() * 30 - 15}deg)`;
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
